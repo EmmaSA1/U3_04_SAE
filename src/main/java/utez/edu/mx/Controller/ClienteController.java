@@ -1,10 +1,9 @@
 package utez.edu.mx.Controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import utez.edu.mx.Models.Cliente;
+import utez.edu.mx.DTO.ClienteDto;
 import utez.edu.mx.Services.ClienteService;
 
 import java.util.List;
@@ -17,25 +16,23 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<Cliente> crear(@RequestBody Cliente cliente) {
-        return new ResponseEntity<>(clienteService.crearCliente(cliente), HttpStatus.CREATED);
+    public ResponseEntity<ClienteDto> crear(@RequestBody ClienteDto dto) {
+        return ResponseEntity.ok(clienteService.crear(dto));
     }
 
     @GetMapping
-    public List<Cliente> obtenerTodos() {
-        return clienteService.obtenerTodos();
+    public ResponseEntity<List<ClienteDto>> obtenerTodos() {
+        return ResponseEntity.ok(clienteService.obtenerTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerPorId(@PathVariable Long id) {
-        return clienteService.obtenerPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ClienteDto> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(clienteService.obtenerPorId(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> actualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
-        return ResponseEntity.ok(clienteService.actualizar(id, cliente));
+    public ResponseEntity<ClienteDto> actualizar(@PathVariable Long id, @RequestBody ClienteDto dto) {
+        return ResponseEntity.ok(clienteService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")

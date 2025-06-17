@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import utez.edu.mx.Models.Almacen;
+import utez.edu.mx.DTO.AlmacenDTO;
 import utez.edu.mx.Services.AlmacenService;
 
 import java.util.List;
@@ -17,25 +17,25 @@ public class AlmacenController {
     private final AlmacenService almacenService;
 
     @PostMapping
-    public ResponseEntity<Almacen> crear(@RequestBody Almacen almacen) {
-        return new ResponseEntity<>(almacenService.crearAlmacen(almacen), HttpStatus.CREATED);
+    public ResponseEntity<AlmacenDTO> crear(@RequestBody AlmacenDTO almacenDTO) {
+        return new ResponseEntity<>(almacenService.crearAlmacen(almacenDTO), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Almacen> obtenerTodos() {
-        return almacenService.obtenerTodos();
+    public ResponseEntity<List<AlmacenDTO>> obtenerTodos() {
+        return ResponseEntity.ok(almacenService.obtenerTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Almacen> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<AlmacenDTO> obtenerPorId(@PathVariable Long id) {
         return almacenService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Almacen> actualizar(@PathVariable Long id, @RequestBody Almacen almacen) {
-        return ResponseEntity.ok(almacenService.actualizar(id, almacen));
+    public ResponseEntity<AlmacenDTO> actualizar(@PathVariable Long id, @RequestBody AlmacenDTO almacenDTO) {
+        return ResponseEntity.ok(almacenService.actualizar(id, almacenDTO));
     }
 
     @DeleteMapping("/{id}")

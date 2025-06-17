@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "clientes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "clientes")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,5 @@ public class Cliente {
 
     private String telefono;
 
-    @Column(unique = true)
-    private String email;
+    private String correo;  // Asegúrate de que esta propiedad exista
 }
